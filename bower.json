@@ -1,0 +1,21 @@
+{
+  "name": "copch-server",
+  "description": "",
+  "main": "",
+  "authors": [
+    "明阳 <lmysoar@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/LiangMingyang/copch-server",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ckeditor": "#full/latest"
+  }
+}
