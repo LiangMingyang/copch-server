@@ -16,6 +16,10 @@
     "tests"
   ],
   "dependencies": {
-    "ckeditor": "#full/latest"
+    "ckeditor": "#full/latest",
+    "angular": "^1.5.6",
+    "angular-route": "^1.5.6",
+    "jquery": "^2.2.4",
+    "bootstrap": "^3.3.6"
   }
 }
