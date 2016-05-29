@@ -6,9 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
+var session = require('express-session');
+var db = require('./database');
+var config = require('./config');
 
 var app = express();
+
+app.use(session(config.redis));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', routes);
+app.use('/', routes);
 //app.use('/users', users);
 var upload = multer({dest: 'tmp/'});
 app.post("/upload", upload.single('upload'), require("./upload.js"));
@@ -57,6 +62,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
+db.sync();
 
 module.exports = app;
