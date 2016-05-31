@@ -19,7 +19,7 @@
         return alert("Success.");
       })["catch"](function(err) {
         console.log(err);
-        return alert(err.message);
+        return alert(err.data.message);
       });
     };
   });

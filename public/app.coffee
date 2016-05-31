@@ -18,7 +18,7 @@ host = "127.0.0.1:3000"
       alert("Success.")
     .catch (err)->
       console.log err
-      alert(err.message)
+      alert(err.data.message)
     #CKEDITOR.instances.content.setData("<p>Yes, you did it!</p>")
     #console.log CKEDITOR.instances.content
 

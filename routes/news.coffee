@@ -1,6 +1,7 @@
 express = require('express')
 router = express.Router(mergeParams: true)
 db = require('../database')
+Errors = require('../errors')
 
 router
 .get '/', (req, res)->
@@ -12,6 +13,25 @@ router
   .catch (err)->
     res.status(err.status || 400)
     res.json(err)
+
+.get '/:news_id', (req, res)->
+  News = db.models.news
+  News.find(req.params.news_id)
+  .then (news)->
+    throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
+    res.json(news.get(plain:true))
+  .catch (err)->
+    res.status(err.status || 400)
+    res.json(err)
+
+.use (req, res, next)->
+  if req?.session?.user?.id isnt 0
+    err = new Errors.InvalidAccess()
+    console.log err
+    res.status(err.status || 400)
+    res.json(err)
+  else
+    next(req, res)
 
 .post '/', (req, res)->
   News = db.models.news
@@ -27,21 +47,11 @@ router
     res.status(err.status || 400)
     res.json(err)
 
-.get '/:news_id', (req, res)->
-  News = db.models.news
-  News.find(req.params.news_id)
-  .then (news)->
-    #throw new Error("Cannot find this piece of news.") if not news
-    res.json(news.get(plain:true))
-  .catch (err)->
-    res.status(err.status || 400)
-    res.json(err)
-
 .post '/:news_id', (req, res)->
   News = db.models.news
   News.find(req.params.news_id)
   .then (news)->
-    #throw new Error("Cannot find this piece of news.") if not news
+    throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
     news.title = req.body.title
     news.content = req.body.content
     news.save()
