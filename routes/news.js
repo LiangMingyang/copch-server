@@ -13,9 +13,17 @@
   Errors = require('../errors');
 
   router.get('/', function(req, res) {
-    var News;
+    var News, User;
     News = db.models.news;
-    return News.findAll().then(function(news_list) {
+    User = db.models.user;
+    return News.findAll({
+      include: [
+        {
+          model: User,
+          as: 'creator'
+        }
+      ]
+    }).then(function(news_list) {
       var news;
       news_list = (function() {
         var i, len, results;
@@ -34,9 +42,20 @@
       return res.json(err);
     });
   }).get('/:news_id', function(req, res) {
-    var News;
+    var News, User;
     News = db.models.news;
-    return News.find(req.params.news_id).then(function(news) {
+    User = db.models.user;
+    return News.find({
+      where: {
+        id: req.params.news_id
+      },
+      include: [
+        {
+          model: User,
+          as: 'creator'
+        }
+      ]
+    }).then(function(news) {
       if (!news) {
         throw new Errors.InvalidAccess("Cannot find this piece of news.");
       }

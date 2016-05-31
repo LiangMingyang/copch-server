@@ -1,78 +1,83 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="copch-admin">
+
+<html lang="zh-cn" ng-app="west">
 <head>
-    <meta charset="UTF-8">
-    <title>Trying CKEditor</title>
-    <script src="ckeditor/ckeditor.js"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
-    <script src="app.js"></script>
+<title> 西促会健康中国推进工作委员会</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link href="index_files/001.css" rel="stylesheet" type="text/css">
+<script src="ckeditor/ckeditor.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="router.js"></script>
+<script src="app.js"></script>
+<!--<base target="_blank">--><base href="." target="_blank">
+
+
+
 </head>
-<body ng-controller="copch-admin.publish">
-    <label for="title">题目</label>
-    <input id="title" name="title" type="text" placeholder="请输入标题" ng-model="form.title"/>
-    <label for="content">正文</label>
-    <div id="content">
-        <p>May I insert some text?</p>
-    </div>
-    <button class="btn" ng-click="publish();">发布新闻</button>
-    <script>
-        if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
-            CKEDITOR.tools.enableHtml5Elements( document );
-        // The trick to keep the editor in the sample quite small
-        // unless user specified own height.
-        //CKEDITOR.plugins.addExternal( 'uploadimage' );
-        CKEDITOR.editorConfig = function( config ) {
-            // Other configs
-            config.height = 150;
-            config.width = 'auto';
-//            config.filebrowserBrowseUrl = '/uploads';
-//            config.filebrowserUploadUrl = '/uploads';
-//            config.filebrowserImageBrowseUrl = '/uploads';
-//            config.filebrowserImageUploadUrl = '/uploads';
+<body ng-controller="main">
 
-        };
-        var initEditor = ( function() {
-            var wysiwygareaAvailable = isWysiwygareaAvailable(),
-                    isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
+<!--上面的导航栏-->
+<table width="1000" border="0" cellpadding="0" cellspacing="0" align="center">
+  <tbody>
+  <tr ng-include="'./top.tpl.html'"></tr>
+  <tr ng-include="'./nav-top.tpl.html'"></tr>
+  </tbody>
+</table>
+<table width="1000" border="0" align="center" style="background:white">
+  <tr>
+    <td style="vertical-align: top;" width="780">
+      <div ng-view></div>
+    </td>
+    <td style="vertical-align: top;" width="210">
+      <table>
+        <tr>
+          <td class="layout" valign="top" ng-include="'notify.tpl.html'"></td>
+        </tr>
+        <tr>
+          <td class="layout" valign="top" ng-include="'structure.tpl.html'"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!--主题的三个：焦点图，工作动态，公告-->
+<!--<table width="1000" border="0" align="center" style="background:white">-->
+  <!--<tbody>-->
+      <!--<tr>-->
+        <!--&lt;!&ndash;<td class="layout" height="245" width="320" valign="top" ng-include="'carousel.tpl.html'" ng-controller="carousel"></td>&ndash;&gt;-->
+        <!---->
+        <!--<td class="layout" valign="top" ng-include="'notify.tpl.html'"></td>-->
+      <!--</tr>-->
+  <!--</tbody>-->
+<!--</table>-->
 
-            return function() {
-                var editorElement = CKEDITOR.document.getById( 'content' );
+<!--&lt;!&ndash;这个是不太重要的新闻和协会简介，感觉并不是很需要这个&ndash;&gt;-->
+<!--<table width="1000" border="0" cellpadding="5" cellspacing="0" align="center" style="background:white">-->
+  <!--<tbody>-->
+  <!--<tr>-->
+    <!--<td class="layout" width="770" valign="top" ng-include="'news.tpl.html'" ng-controller="news"></td>-->
+    <!--<td class="layout" width="210" valign="top" ng-include="'structure.tpl.html'"></td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+<!--</table>-->
 
-                // :(((
-                if ( isBBCodeBuiltIn ) {
-                    editorElement.setHtml(
-                            'Oh, please contact me.'
-                    );
-                }
-
-                // Depending on the wysiwygare plugin availability initialize classic or inline editor.
-                if ( wysiwygareaAvailable ) {
-                    CKEDITOR.replace( 'content' );
-                } else {
-                    editorElement.setAttribute( 'contenteditable', 'true' );
-                    CKEDITOR.inline( 'content' );
-
-                    // TODO we can consider displaying some info box that
-                    // without wysiwygarea the classic editor may not work.
-                }
-            };
-
-            function isWysiwygareaAvailable() {
-                // If in development mode, then the wysiwygarea must be available.
-                // Split REV into two strings so builder does not replace it :D.
-                if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {
-                    return true;
-                }
-
-                return !!CKEDITOR.plugins.get( 'wysiwygarea' );
-            }
-        } )();
-        initEditor();
-    </script>
+<table width="1000" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tbody>
+  <tr>
+    <td height="100" align="center" bgcolor="#FFFFFF" style="font-family:arial; line-height:26px;background:url(./index_files/jcdzz_36.jpg)">
+        <br>Copyright@2016-2017  西促会健康中国推进工作委员会(暂时没有备案) All Rights Reserved 备案号<a style="COLOR: blue; TEXT-DECORATION: underline" class="hui" href="#">京ICP备06048741号</a>&nbsp;<br>
+    </td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>

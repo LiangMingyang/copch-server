@@ -6,7 +6,13 @@ Errors = require('../errors')
 router
 .get '/', (req, res)->
   News = db.models.news
-  News.findAll()
+  User = db.models.user
+  News.findAll(
+    include : [
+      model : User
+      as : 'creator'
+    ]
+  )
   .then (news_list)->
     news_list = (news.get(plain:true) for news in news_list)
     res.json(news_list)
@@ -16,7 +22,15 @@ router
 
 .get '/:news_id', (req, res)->
   News = db.models.news
-  News.find(req.params.news_id)
+  User = db.models.user
+  News.find(
+    where:
+      id : req.params.news_id
+    include : [
+      model : User
+      as : 'creator'
+    ]
+  )
   .then (news)->
     throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
     res.json(news.get(plain:true))

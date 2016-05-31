@@ -1,0 +1,25 @@
+{
+  "name": "copch",
+  "description": "",
+  "main": "",
+  "authors": [
+    "lmy <lmysoar@hotmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/LiangMingyang/copch",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.8",
+    "angular": "~1.4.8",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6",
+    "angular-bootstrap": "^1.2.1"
+  }
+}
