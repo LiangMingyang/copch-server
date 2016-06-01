@@ -22,7 +22,7 @@
     extend(InvalidAccess, superClass);
 
     function InvalidAccess(message) {
-      this.message = message != null ? message : "做不到";
+      this.message = message != null ? message : "需要登录";
       this.name = 'InvalidAccess';
       this.status = 403;
       Error.captureStackTrace(this, InvalidAccess);

@@ -5,7 +5,7 @@ class LoginError extends Error
     Error.captureStackTrace(this, LoginError)
 
 class InvalidAccess extends Error
-  constructor: (@message = "做不到") ->
+  constructor: (@message = "需要登录") ->
     @name = 'InvalidAccess'
     @status = 403
     Error.captureStackTrace(this, InvalidAccess)
