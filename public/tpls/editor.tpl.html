@@ -7,68 +7,66 @@
 
     <tr>
         <td height="180" valign="top">
-            <label for="title">题目</label>
+            <label for="title">标题</label>
             <input class="form-control" id="title" name="title" type="text"  placeholder="题目" ng-model="form.title"/>
-            <div id="content">
-                <p>发布一篇新闻</p>
-            </div>
+            <textarea id="content" ck-editor ng-model="form.content"></textarea>
             <button class="btn" ng-click="publish();">发布新闻</button>
         </td>
     </tr>
 </table>
 
 
-<script>
-    if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
-        CKEDITOR.tools.enableHtml5Elements( document );
-    // The trick to keep the editor in the sample quite small
-    // unless user specified own height.
-    //CKEDITOR.plugins.addExternal( 'uploadimage' );
-    CKEDITOR.editorConfig = function( config ) {
-        // Other configs
-        config.height = 150;
-        config.width = 'auto';
-//            config.filebrowserBrowseUrl = '/uploads';
-//            config.filebrowserUploadUrl = '/uploads';
-//            config.filebrowserImageBrowseUrl = '/uploads';
-//            config.filebrowserImageUploadUrl = '/uploads';
+<!--<script>-->
+    <!--if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )-->
+        <!--CKEDITOR.tools.enableHtml5Elements( document );-->
+    <!--// The trick to keep the editor in the sample quite small-->
+    <!--// unless user specified own height.-->
+    <!--//CKEDITOR.plugins.addExternal( 'uploadimage' );-->
+    <!--CKEDITOR.editorConfig = function( config ) {-->
+        <!--// Other configs-->
+        <!--config.height = 150;-->
+        <!--config.width = 'auto';-->
+<!--//            config.filebrowserBrowseUrl = '/uploads';-->
+<!--//            config.filebrowserUploadUrl = '/uploads';-->
+<!--//            config.filebrowserImageBrowseUrl = '/uploads';-->
+<!--//            config.filebrowserImageUploadUrl = '/uploads';-->
 
-    };
-    var initEditor = ( function() {
-        var wysiwygareaAvailable = isWysiwygareaAvailable(),
-                isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
+    <!--};-->
+    <!--var initEditor = ( function() {-->
+        <!--var wysiwygareaAvailable = isWysiwygareaAvailable(),-->
+                <!--isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );-->
 
-        return function() {
-            var editorElement = CKEDITOR.document.getById( 'content' );
+        <!--return function() {-->
+            <!--var editorElement = CKEDITOR.document.getById( 'content' );-->
 
-            // :(((
-            if ( isBBCodeBuiltIn ) {
-                editorElement.setHtml(
-                        'Oh, please contact me.'
-                );
-            }
+            <!--// :(((-->
+            <!--if ( isBBCodeBuiltIn ) {-->
+                <!--editorElement.setHtml(-->
+                        <!--'Oh, please contact me.'-->
+                <!--);-->
+            <!--}-->
 
-            // Depending on the wysiwygare plugin availability initialize classic or inline editor.
-            if ( wysiwygareaAvailable ) {
-                CKEDITOR.replace( 'content' );
-            } else {
-                editorElement.setAttribute( 'contenteditable', 'true' );
-                CKEDITOR.inline( 'content' );
+            <!--// Depending on the wysiwygare plugin availability initialize classic or inline editor.-->
+            <!--if ( wysiwygareaAvailable ) {-->
+                <!--CKEDITOR.replace( 'content' );-->
+            <!--} else {-->
+                <!--editorElement.setAttribute( 'contenteditable', 'true' );-->
+                <!--CKEDITOR.inline( 'content' );-->
 
-                // TODO we can consider displaying some info box that
-                // without wysiwygarea the classic editor may not work.
-            }
-        };
+                <!--// TODO we can consider displaying some info box that-->
+                <!--// without wysiwygarea the classic editor may not work.-->
+            <!--}-->
+        <!--};-->
 
-        function isWysiwygareaAvailable() {
-            // If in development mode, then the wysiwygarea must be available.
-            // Split REV into two strings so builder does not replace it :D.
-            if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {
-                return true;
-            }
+        <!--function isWysiwygareaAvailable() {-->
+            <!--// If in development mode, then the wysiwygarea must be available.-->
+            <!--// Split REV into two strings so builder does not replace it :D.-->
+            <!--if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {-->
+                <!--return true;-->
+            <!--}-->
 
-            return !!CKEDITOR.plugins.get( 'wysiwygarea' );
-        }
-    } )();
-    initEditor();
-</script>
+            <!--return !!CKEDITOR.plugins.get( 'wysiwygarea' );-->
+        <!--}-->
+    <!--} )();-->
+    <!--initEditor();-->
+<!--</script>-->

@@ -3,7 +3,29 @@ angular.module('west-dbms', [
 .factory 'DBMS', ($http)->
   HOST = "http://127.0.0.1:3000"
   user = {}
-  publish_news = {}
+  publish_news = {
+    title : ""
+    content : ""
+    create : ()->
+      console.log publish_news
+      $http.post("#{HOST}/news", publish_news)
+      .then (res)->
+        news.push(res.data)
+        alert("Published successfully")
+      .catch (err)->
+        console.log err
+        alert(err.data.message)
+
+    update : (id)->
+      $http.post("#{HOST}/news/#{id}", publish_news)
+      .then (res)->
+        news.update(res.data)
+        alert("Updated successfully")
+      .catch (err)->
+        console.log err
+        alert(err.data.message)
+  }
+
   news = {
     data: []
     dic: {}
@@ -12,12 +34,22 @@ angular.module('west-dbms', [
       .then (res)->
         console.log "???"
         news.data.splice(0, news.data.length)
-        for _new in res.data
-          news.data.push(_new)
-          news.dic[_new.id] = _new
+        for _news,i in res.data
+          _news.index = i
+          news.data.push(_news)
+          news.dic[_news.id] = _news
       .catch (err)->
         console.log err
         alert(err.data.message)
+    push: (_news)->
+      news.data.push(_news)
+      news.dic[_news.id] = _news
+
+    update: (_news)->
+      return if not news.dic[_news.id]?.index
+      _news =news.dic[_news.id].index
+      news.data[_news.index] = _news
+      news.dic[_news.id] = _news
   }
   slides = [
     image: "images/news/img1.jpg"

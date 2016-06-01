@@ -51,7 +51,10 @@ router
 .post '/', (req, res)->
   News = db.models.news
   User = db.models.user
-  User.find req?.session?.user?.id
+  db.Promise.resolve()
+  .then ->
+    return if not req?.session?.user?.id
+    User.findById req.session.user.id
   .then (user)->
     throw new Errors.InvalidAccess() if not user
     News.create(
@@ -60,7 +63,6 @@ router
       creator_id : user.id
     )
   .then (news)->
-    console.log news.get(plain:true)
     res.json(news.get(plain:true))
   .catch (err)->
     console.log err

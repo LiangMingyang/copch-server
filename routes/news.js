@@ -67,10 +67,16 @@
       return res.json(err);
     });
   }).post('/', function(req, res) {
-    var News, User, ref, ref1;
+    var News, User;
     News = db.models.news;
     User = db.models.user;
-    return User.find(req != null ? (ref = req.session) != null ? (ref1 = ref.user) != null ? ref1.id : void 0 : void 0 : void 0).then(function(user) {
+    return db.Promise.resolve().then(function() {
+      var ref, ref1;
+      if (!(req != null ? (ref = req.session) != null ? (ref1 = ref.user) != null ? ref1.id : void 0 : void 0 : void 0)) {
+        return;
+      }
+      return User.findById(req.session.user.id);
+    }).then(function(user) {
       if (!user) {
         throw new Errors.InvalidAccess();
       }
@@ -80,9 +86,6 @@
         creator_id: user.id
       });
     }).then(function(news) {
-      console.log(news.get({
-        plain: true
-      }));
       return res.json(news.get({
         plain: true
       }));

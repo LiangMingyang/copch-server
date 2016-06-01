@@ -4,27 +4,63 @@
     var HOST, about, contact, news, notify, policy_list, publish_news, slides, user;
     HOST = "http://127.0.0.1:3000";
     user = {};
-    publish_news = {};
+    publish_news = {
+      title: "",
+      content: "",
+      create: function() {
+        console.log(publish_news);
+        return $http.post(HOST + "/news", publish_news).then(function(res) {
+          news.push(res.data);
+          return alert("Published successfully");
+        })["catch"](function(err) {
+          console.log(err);
+          return alert(err.data.message);
+        });
+      },
+      update: function(id) {
+        return $http.post(HOST + "/news/" + id, publish_news).then(function(res) {
+          news.update(res.data);
+          return alert("Updated successfully");
+        })["catch"](function(err) {
+          console.log(err);
+          return alert(err.data.message);
+        });
+      }
+    };
     news = {
       data: [],
       dic: {},
       refresh: function() {
         return $http.get(HOST + "/news").then(function(res) {
-          var _new, i, len, ref, results;
+          var _news, i, j, len, ref, results;
           console.log("???");
           news.data.splice(0, news.data.length);
           ref = res.data;
           results = [];
-          for (i = 0, len = ref.length; i < len; i++) {
-            _new = ref[i];
-            news.data.push(_new);
-            results.push(news.dic[_new.id] = _new);
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            _news = ref[i];
+            _news.index = i;
+            news.data.push(_news);
+            results.push(news.dic[_news.id] = _news);
           }
           return results;
         })["catch"](function(err) {
           console.log(err);
           return alert(err.data.message);
         });
+      },
+      push: function(_news) {
+        news.data.push(_news);
+        return news.dic[_news.id] = _news;
+      },
+      update: function(_news) {
+        var ref;
+        if (!((ref = news.dic[_news.id]) != null ? ref.index : void 0)) {
+          return;
+        }
+        _news = news.dic[_news.id].index;
+        news.data[_news.index] = _news;
+        return news.dic[_news.id] = _news;
       }
     };
     slides = [

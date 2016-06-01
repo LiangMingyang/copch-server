@@ -6,6 +6,21 @@ angular.module('west', [
   'west-dbms'
 ])
 
+.directive 'ckEditor', ->
+  {
+    require: '?ngModel'
+    link: (scope, elm, attr, ngModel) ->
+      ck = CKEDITOR.replace(elm[0])
+      return if not ngModel
+      ck.on 'pasteState', ->
+        scope.$apply ->
+          ngModel.$setViewValue ck.getData()
+
+      ngModel.$render = (value) ->
+        ck.setData ngModel.$viewValue
+
+  }
+
 .filter('richtext', ['$sce', ($sce)->
   (html)->
     $sce.trustAsHtml(html)
@@ -52,18 +67,8 @@ angular.module('west', [
       err = res.data
       alert(err.message)
 
-.controller 'publish', ($scope, $http)->
-  $scope.form = {
-    title: ""
-    content: ""
-  }
+.controller 'publish', ($scope, DBMS)->
+  $scope.form = DBMS.publish_news
 
   $scope.publish = ()->
-    $scope.form.content = CKEDITOR.instances.content.getData()
-    $http.post("#{HOST}/news", $scope.form)
-    .then (res)->
-      console.log res.data
-      alert("Publish successfully.")
-    .catch (res)->
-      err = res.data
-      alert(err.message)
+    DBMS.publish_news.create()

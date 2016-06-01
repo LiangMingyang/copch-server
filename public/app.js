@@ -4,7 +4,26 @@
 
   HOST = "http://127.0.0.1:3000";
 
-  angular.module('west', ['ui.bootstrap', 'west-router', 'west-dbms']).filter('richtext', [
+  angular.module('west', ['ui.bootstrap', 'west-router', 'west-dbms']).directive('ckEditor', function() {
+    return {
+      require: '?ngModel',
+      link: function(scope, elm, attr, ngModel) {
+        var ck;
+        ck = CKEDITOR.replace(elm[0]);
+        if (!ngModel) {
+          return;
+        }
+        ck.on('pasteState', function() {
+          return scope.$apply(function() {
+            return ngModel.$setViewValue(ck.getData());
+          });
+        });
+        return ngModel.$render = function(value) {
+          return ck.setData(ngModel.$viewValue);
+        };
+      }
+    };
+  }).filter('richtext', [
     '$sce', function($sce) {
       return function(html) {
         return $sce.trustAsHtml(html);
@@ -43,21 +62,10 @@
         return alert(err.message);
       });
     };
-  }).controller('publish', function($scope, $http) {
-    $scope.form = {
-      title: "",
-      content: ""
-    };
+  }).controller('publish', function($scope, DBMS) {
+    $scope.form = DBMS.publish_news;
     return $scope.publish = function() {
-      $scope.form.content = CKEDITOR.instances.content.getData();
-      return $http.post(HOST + "/news", $scope.form).then(function(res) {
-        console.log(res.data);
-        return alert("Publish successfully.");
-      })["catch"](function(res) {
-        var err;
-        err = res.data;
-        return alert(err.message);
-      });
+      return DBMS.publish_news.create();
     };
   });
 
