@@ -66,7 +66,7 @@
                                 <td align="left" style="padding:5px;">
                                     <table id="ArticleList3_DataList1" cellspacing="0" border="0" style="border-collapse:collapse;">
                                         <tbody>
-                                        <tr ng-repeat="news in news_list">
+                                        <tr ng-repeat="news in news_list | limitTo:5">
                                             <td>
                                                 <div class="ListInfo">
                                                     <table>
