@@ -66,23 +66,19 @@
       res.status(err.status || 400);
       return res.json(err);
     });
-  }).use(function(req, res, next) {
-    var err, ref, ref1;
-    if ((req != null ? (ref = req.session) != null ? (ref1 = ref.user) != null ? ref1.id : void 0 : void 0 : void 0) !== 0) {
-      err = new Errors.InvalidAccess();
-      console.log(err);
-      res.status(err.status || 400);
-      return res.json(err);
-    } else {
-      return next(req, res);
-    }
   }).post('/', function(req, res) {
-    var News;
+    var News, User, ref, ref1;
     News = db.models.news;
-    console.log(req.body);
-    return News.create({
-      title: req.body.title,
-      content: req.body.content
+    User = db.models.user;
+    return User.find(req != null ? (ref = req.session) != null ? (ref1 = ref.user) != null ? ref1.id : void 0 : void 0 : void 0).then(function(user) {
+      if (!user) {
+        throw new Errors.InvalidAccess();
+      }
+      return News.create({
+        title: req.body.title,
+        content: req.body.content,
+        creator_id: user.id
+      });
     }).then(function(news) {
       console.log(news.get({
         plain: true
@@ -91,6 +87,7 @@
         plain: true
       }));
     })["catch"](function(err) {
+      console.log(err);
       res.status(err.status || 400);
       return res.json(err);
     });

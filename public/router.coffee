@@ -29,6 +29,11 @@ angular.module('west-router', [
   )
   .when('/login',
     templateUrl: 'tpls/login.tpl.html'
+    controller: 'login'
+  )
+  .when('/publish',
+    templateUrl: 'tpls/editor.tpl.html'
+    controller : 'publish'
   )
   .otherwise(
     redirectTo: '/index'

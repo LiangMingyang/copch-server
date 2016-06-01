@@ -75,6 +75,22 @@
         return alert(err.message);
       });
     };
+  }).controller('publish', function($scope, $http) {
+    $scope.form = {
+      title: "",
+      content: ""
+    };
+    return $scope.publish = function() {
+      $scope.form.content = CKEDITOR.instances.content.getData();
+      return $http.post(HOST + "/news", $scope.form).then(function(res) {
+        console.log(res.data);
+        return alert("Publish successfully.");
+      })["catch"](function(res) {
+        var err;
+        err = res.data;
+        return alert(err.message);
+      });
+    };
   });
 
 }).call(this);

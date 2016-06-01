@@ -243,3 +243,18 @@ angular.module('west', [
       err = res.data
       alert(err.message)
 
+.controller 'publish', ($scope, $http)->
+  $scope.form = {
+    title: ""
+    content: ""
+  }
+
+  $scope.publish = ()->
+    $scope.form.content = CKEDITOR.instances.content.getData()
+    $http.post("#{HOST}/news", $scope.form)
+    .then (res)->
+      console.log res.data
+      alert("Publish successfully.")
+    .catch (res)->
+      err = res.data
+      alert(err.message)

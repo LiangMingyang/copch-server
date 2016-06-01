@@ -18,7 +18,11 @@
     }).when('/contact', {
       templateUrl: 'tpls/contact.tpl.html'
     }).when('/login', {
-      templateUrl: 'tpls/login.tpl.html'
+      templateUrl: 'tpls/login.tpl.html',
+      controller: 'login'
+    }).when('/publish', {
+      templateUrl: 'tpls/editor.tpl.html',
+      controller: 'publish'
     }).otherwise({
       redirectTo: '/index'
     });

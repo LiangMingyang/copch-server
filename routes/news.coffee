@@ -38,26 +38,32 @@ router
     res.status(err.status || 400)
     res.json(err)
 
-.use (req, res, next)->
-  if req?.session?.user?.id isnt 0
-    err = new Errors.InvalidAccess()
-    console.log err
-    res.status(err.status || 400)
-    res.json(err)
-  else
-    next(req, res)
-
+#.use [
+#  (req, res, next)->
+#    if req?.session?.user?.id is undefined
+#      err = new Errors.InvalidAccess()
+#      console.log err
+#      res.status(err.status || 400)
+#      res.json(err)
+#    else
+#      next(req, res)
+#]
 .post '/', (req, res)->
   News = db.models.news
-  console.log req.body
-  News.create(
-    title : req.body.title
-    content : req.body.content
-  )
+  User = db.models.user
+  User.find req?.session?.user?.id
+  .then (user)->
+    throw new Errors.InvalidAccess() if not user
+    News.create(
+      title : req.body.title
+      content : req.body.content
+      creator_id : user.id
+    )
   .then (news)->
     console.log news.get(plain:true)
     res.json(news.get(plain:true))
   .catch (err)->
+    console.log err
     res.status(err.status || 400)
     res.json(err)
 
