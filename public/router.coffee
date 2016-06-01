@@ -12,7 +12,7 @@ angular.module('west-router', [
   .when('/news',
     templateUrl: 'tpls/news.tpl.html'
   )
-  .when('/news/:index',
+  .when('/news/:news_id',
     templateUrl: 'tpls/news-detail.tpl.html'
   )
   .when('/expert',
@@ -26,6 +26,9 @@ angular.module('west-router', [
   )
   .when('/contact',
     templateUrl: 'tpls/contact.tpl.html'
+  )
+  .when('/login',
+    templateUrl: 'tpls/login.tpl.html'
   )
   .otherwise(
     redirectTo: '/index'
