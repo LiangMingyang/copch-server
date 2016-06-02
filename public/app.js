@@ -68,6 +68,9 @@
       return DBMS.publish_news.create().then(function() {
         DBMS.publish_news.title = "";
         return DBMS.publish_news.content = "";
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
       });
     };
   }).controller('update', function($scope, DBMS, $route) {
@@ -80,6 +83,9 @@
       return DBMS.publish_news.update(news_id).then(function() {
         DBMS.publish_news.title = "";
         return DBMS.publish_news.content = "";
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
       });
     };
   });

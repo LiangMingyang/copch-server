@@ -12,18 +12,12 @@ angular.module('west-dbms', [
       .then (res)->
         news.push(res.data)
         alert("Published successfully")
-      .catch (err)->
-        console.log err
-        alert(err.data.message)
 
     update : (id)->
       $http.post("#{HOST}/news/#{id}", publish_news)
       .then (res)->
         news.update(res.data)
         alert("Updated successfully")
-      .catch (err)->
-        console.log err
-        alert(err.data.message)
   }
 
   news = {
@@ -32,7 +26,6 @@ angular.module('west-dbms', [
     refresh: ()->
       $http.get("#{HOST}/news")
       .then (res)->
-        console.log "???"
         news.data.splice(0, news.data.length)
         for _news,i in res.data
           _news.index = i

@@ -75,6 +75,9 @@ angular.module('west', [
     .then ->
       DBMS.publish_news.title = ""
       DBMS.publish_news.content = ""
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
 
 .controller 'update', ($scope, DBMS, $route)->
   news_id = $route.current.params.news_id
@@ -87,3 +90,6 @@ angular.module('west', [
     .then ->
       DBMS.publish_news.title = ""
       DBMS.publish_news.content = ""
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
