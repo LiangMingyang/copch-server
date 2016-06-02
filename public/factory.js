@@ -58,7 +58,7 @@
         if (!((ref = news.dic[_news.id]) != null ? ref.index : void 0)) {
           return;
         }
-        _news = news.dic[_news.id].index;
+        _news.index = news.dic[_news.id].index;
         news.data[_news.index] = _news;
         return news.dic[_news.id] = _news;
       }

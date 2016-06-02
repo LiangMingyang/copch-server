@@ -65,7 +65,22 @@
   }).controller('publish', function($scope, DBMS) {
     $scope.form = DBMS.publish_news;
     return $scope.publish = function() {
-      return DBMS.publish_news.create();
+      return DBMS.publish_news.create().then(function() {
+        DBMS.publish_news.title = "";
+        return DBMS.publish_news.content = "";
+      });
+    };
+  }).controller('update', function($scope, DBMS, $route) {
+    var news_id;
+    news_id = $route.current.params.news_id;
+    DBMS.publish_news.title = DBMS.news.dic[news_id].title;
+    DBMS.publish_news.content = DBMS.news.dic[news_id].content;
+    $scope.form = DBMS.publish_news;
+    return $scope.publish = function() {
+      return DBMS.publish_news.update(news_id).then(function() {
+        DBMS.publish_news.title = "";
+        return DBMS.publish_news.content = "";
+      });
     };
   });
 

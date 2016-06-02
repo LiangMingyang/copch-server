@@ -95,9 +95,21 @@
       return res.json(err);
     });
   }).post('/:news_id', function(req, res) {
-    var News;
+    var News, User;
     News = db.models.news;
-    return News.find(req.params.news_id).then(function(news) {
+    User = db.models.user;
+    return db.Promise.resolve().then(function() {
+      var ref, ref1;
+      if (!(req != null ? (ref = req.session) != null ? (ref1 = ref.user) != null ? ref1.id : void 0 : void 0 : void 0)) {
+        return;
+      }
+      return User.findById(req.session.user.id);
+    }).then(function(user) {
+      if (!user) {
+        throw new Errors.InvalidAccess();
+      }
+      return News.findById(req.params.news_id);
+    }).then(function(news) {
       if (!news) {
         throw new Errors.InvalidAccess("Cannot find this piece of news.");
       }

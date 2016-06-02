@@ -71,7 +71,14 @@ router
 
 .post '/:news_id', (req, res)->
   News = db.models.news
-  News.find(req.params.news_id)
+  User = db.models.user
+  db.Promise.resolve()
+  .then ->
+    return if not req?.session?.user?.id
+    User.findById req.session.user.id
+  .then (user)->
+    throw new Errors.InvalidAccess() if not user
+    News.findById(req.params.news_id)
   .then (news)->
     throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
     news.title = req.body.title

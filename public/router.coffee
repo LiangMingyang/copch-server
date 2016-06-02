@@ -35,6 +35,10 @@ angular.module('west-router', [
     templateUrl: 'tpls/editor.tpl.html'
     controller : 'publish'
   )
+  .when('/update/:news_id',
+    templateUrl: 'tpls/editor.tpl.html'
+    controller : 'update'
+  )
   .otherwise(
     redirectTo: '/index'
   )

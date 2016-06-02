@@ -72,3 +72,18 @@ angular.module('west', [
 
   $scope.publish = ()->
     DBMS.publish_news.create()
+    .then ->
+      DBMS.publish_news.title = ""
+      DBMS.publish_news.content = ""
+
+.controller 'update', ($scope, DBMS, $route)->
+  news_id = $route.current.params.news_id
+  DBMS.publish_news.title = DBMS.news.dic[news_id].title
+  DBMS.publish_news.content = DBMS.news.dic[news_id].content
+  $scope.form = DBMS.publish_news
+
+  $scope.publish = ()->
+    DBMS.publish_news.update(news_id)
+    .then ->
+      DBMS.publish_news.title = ""
+      DBMS.publish_news.content = ""

@@ -47,7 +47,7 @@ angular.module('west-dbms', [
 
     update: (_news)->
       return if not news.dic[_news.id]?.index
-      _news =news.dic[_news.id].index
+      _news.index =news.dic[_news.id].index
       news.data[_news.index] = _news
       news.dic[_news.id] = _news
   }
