@@ -12,18 +12,12 @@
         return $http.post(HOST + "/news", publish_news).then(function(res) {
           news.push(res.data);
           return alert("Published successfully");
-        })["catch"](function(err) {
-          console.log(err);
-          return alert(err.data.message);
         });
       },
       update: function(id) {
         return $http.post(HOST + "/news/" + id, publish_news).then(function(res) {
           news.update(res.data);
           return alert("Updated successfully");
-        })["catch"](function(err) {
-          console.log(err);
-          return alert(err.data.message);
         });
       }
     };
@@ -33,7 +27,6 @@
       refresh: function() {
         return $http.get(HOST + "/news").then(function(res) {
           var _news, i, j, len, ref, results;
-          console.log("???");
           news.data.splice(0, news.data.length);
           ref = res.data;
           results = [];
