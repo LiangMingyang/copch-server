@@ -1,20 +1,19 @@
 angular.module('west-dbms', [
 ])
 .factory 'DBMS', ($http)->
-  HOST = "http://127.0.0.1:3000"
   user = {}
   publish_news = {
     title : ""
     content : ""
     create : ()->
       console.log publish_news
-      $http.post("#{HOST}/news", publish_news)
+      $http.post("/news", publish_news)
       .then (res)->
         news.push(res.data)
         alert("Published successfully")
 
     update : (id)->
-      $http.post("#{HOST}/news/#{id}", publish_news)
+      $http.post("/news/#{id}", publish_news)
       .then (res)->
         news.update(res.data)
         alert("Updated successfully")
@@ -24,7 +23,7 @@ angular.module('west-dbms', [
     data: []
     dic: {}
     refresh: ()->
-      $http.get("#{HOST}/news")
+      $http.get("/news")
       .then (res)->
         news.data.splice(0, news.data.length)
         for _news,i in res.data

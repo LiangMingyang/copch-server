@@ -1,4 +1,3 @@
-HOST = "http://127.0.0.1:3000"
 
 angular.module('west', [
   'ui.bootstrap',
@@ -58,7 +57,7 @@ angular.module('west', [
     password: ""
   }
   $scope.login = ()->
-    $http.post("#{HOST}/users/login", $scope.form)
+    $http.post("/users/login", $scope.form)
     .then (res)->
       console.log res.data
       alert("Login successfully.")

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "generatePW.js",
+  "sourceRoot": "",
+  "sources": [
+    "generatePW.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;EAAA,YAAA,GAAe,OAAA,CAAQ,eAAR;;EACf,OAAO,CAAC,GAAR,CAAY,YAAY,CAAC,QAAb,CAAsB,MAAtB,CAAZ;AADA"
+}
