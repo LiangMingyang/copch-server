@@ -24,7 +24,7 @@ angular.module('west', [
   (html)->
     $sce.trustAsHtml(html)
 ])
-.controller('main', ($scope, $timeout, DBMS, $route)->
+.controller('main', ($scope, $timeout, DBMS, $location, $route)->
 
 
   $scope.router = $route

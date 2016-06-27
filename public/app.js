@@ -25,7 +25,7 @@
         return $sce.trustAsHtml(html);
       };
     }
-  ]).controller('main', function($scope, $timeout, DBMS, $route) {
+  ]).controller('main', function($scope, $timeout, DBMS, $location, $route) {
     var update;
     $scope.router = $route;
     $scope.now = new Date();
