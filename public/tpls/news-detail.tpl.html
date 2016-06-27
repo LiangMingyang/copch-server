@@ -8,6 +8,7 @@
                     <td width="78%"></td>
                     <td width="8%">
                         <a ng-if="user.id" ng-href="#/update/{{router.current.params.news_id}}">编辑</a>
+                        <a ng-if="user.id" ng-click="delete(news_dic[router.current.params.news_id]);">删除</a>
                     </td>
                 </tr>
                 </tbody></table>

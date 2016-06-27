@@ -56,6 +56,8 @@ angular.module('west', [
 
   $scope.delete = (news)->
     DBMS.news.delete(news)
+    .then ->
+      $location.path('/news').replace()
     .catch (err)->
       alert(err.data.message)
       console.log err

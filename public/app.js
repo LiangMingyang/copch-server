@@ -45,7 +45,9 @@
     DBMS.user.refresh();
     $scope.user = DBMS.user;
     return $scope["delete"] = function(news) {
-      return DBMS.news["delete"](news)["catch"](function(err) {
+      return DBMS.news["delete"](news).then(function() {
+        return $location.path('/news').replace();
+      })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
       });
