@@ -73,7 +73,7 @@
       content: ""
     };
     return $scope.publish = function() {
-      return DBMS.news.create($scope.form).then(function() {
+      return DBMS.news.push($scope.form).then(function() {
         $scope.form.title = "";
         return $scope.form.content = "";
       })["catch"](function(err) {

@@ -83,7 +83,7 @@ angular.module('west', [
   }
 
   $scope.publish = ()->
-    DBMS.news.create($scope.form)
+    DBMS.news.push($scope.form)
     .then ->
       $scope.form.title = ""
       $scope.form.content = ""
