@@ -95,8 +95,8 @@ angular.module('west', [
   news_id = $route.current.params.news_id
   $scope.form = {
     id : news_id
-    title : ""
-    content : ""
+    title : DBMS.news.dic[news_id].title
+    content : DBMS.news.dic[news_id].content
   }
 
   $scope.publish = ()->
