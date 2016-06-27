@@ -52,6 +52,8 @@
     return res.json({
       message: "success"
     });
+  }).get('/', function(req, res) {
+    return res.json(req.session.user);
   });
 
   module.exports = router;

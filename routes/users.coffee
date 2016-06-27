@@ -39,5 +39,8 @@ router
   delete req.session.user
   res.json(message: "success")
 
+.get '/', (req, res)->
+  res.json(req.session.user)
+
 
 module.exports = router

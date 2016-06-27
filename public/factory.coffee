@@ -1,7 +1,19 @@
 angular.module('west-dbms', [
 ])
 .factory 'DBMS', ($http)->
-  user = undefined
+  user = {
+    id: undefined 
+    username : undefined
+    nickname : undefined
+    refresh: ()->
+      $http.get("/users")
+      .then (res)->
+        user.id = res.data.id
+        user.username = res.data.username
+        user.nickname = res.data.nickname
+      .catch (err)->
+        console.log err
+  }
 
   news = {
     data: []

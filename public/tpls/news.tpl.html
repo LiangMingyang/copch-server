@@ -33,7 +33,7 @@
                                                 </td>
 
                                                 <td style="text-align:right" class="">
-                                                    <a ng-click="delete(news);">删除</a>
+                                                    <a ng-if="user.id" ng-click="delete(news);">删除</a>
                                                     {{news.created_at | date:"yyyy-MM-dd"}}
                                                 </td>
                                             </tr>

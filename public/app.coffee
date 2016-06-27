@@ -51,13 +51,16 @@ angular.module('west', [
 
   $scope.policy_list = DBMS.policy_list
 
+  DBMS.user.refresh()
+  $scope.user = DBMS.user
+
   $scope.delete = (news)->
     DBMS.news.delete(news)
     .catch (err)->
       alert(err.data.message)
       console.log err
 )
-.controller 'login', ($scope, $http, $location)->
+.controller 'login', ($scope, $http, $location, DBMS)->
   $scope.form = {
     username: ""
     password: ""
@@ -66,7 +69,7 @@ angular.module('west', [
     $http.post("/users/login", $scope.form)
     .then (res)->
       console.log res.data
-      DBMS.user = res.data
+      DBMS.user.refresh()
       alert("Login successfully.")
       $location.path('/').replace()
     .catch (res)->

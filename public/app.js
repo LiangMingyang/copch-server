@@ -42,13 +42,15 @@
     $scope.notify = DBMS.notify;
     $scope.contact = DBMS.contact;
     $scope.policy_list = DBMS.policy_list;
+    DBMS.user.refresh();
+    $scope.user = DBMS.user;
     return $scope["delete"] = function(news) {
       return DBMS.news["delete"](news)["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
       });
     };
-  }).controller('login', function($scope, $http, $location) {
+  }).controller('login', function($scope, $http, $location, DBMS) {
     $scope.form = {
       username: "",
       password: ""
@@ -56,7 +58,7 @@
     return $scope.login = function() {
       return $http.post("/users/login", $scope.form).then(function(res) {
         console.log(res.data);
-        DBMS.user = res.data;
+        DBMS.user.refresh();
         alert("Login successfully.");
         return $location.path('/').replace();
       })["catch"](function(res) {

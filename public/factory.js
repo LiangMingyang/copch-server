@@ -2,7 +2,20 @@
 (function() {
   angular.module('west-dbms', []).factory('DBMS', function($http) {
     var about, contact, news, notify, policy_list, slides, user;
-    user = void 0;
+    user = {
+      id: void 0,
+      username: void 0,
+      nickname: void 0,
+      refresh: function() {
+        return $http.get("/users").then(function(res) {
+          user.id = res.data.id;
+          user.username = res.data.username;
+          return user.nickname = res.data.nickname;
+        })["catch"](function(err) {
+          return console.log(err);
+        });
+      }
+    };
     news = {
       data: [],
       dic: {},
