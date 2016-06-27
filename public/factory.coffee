@@ -1,23 +1,7 @@
 angular.module('west-dbms', [
 ])
 .factory 'DBMS', ($http)->
-  user = {}
-  publish_news = {
-    title : ""
-    content : ""
-    create : ()->
-      console.log publish_news
-      $http.post("/news", publish_news)
-      .then (res)->
-        news.push(res.data)
-        alert("Published successfully")
-
-    update : (id)->
-      $http.post("/news/#{id}", publish_news)
-      .then (res)->
-        news.update(res.data)
-        alert("Updated successfully")
-  }
+  user = undefined
 
   news = {
     data: []
@@ -34,14 +18,29 @@ angular.module('west-dbms', [
         console.log err
         alert(err.data.message)
     push: (_news)->
-      news.data.push(_news)
-      news.dic[_news.id] = _news
+      $http.post("/news", _news)
+      .then (res)->
+#        news.push(res.data)
+#        news.data.push(_news)
+#        news.dic[_news.id] = _news
+        alert("Published successfully")
+        news.refresh()
 
     update: (_news)->
-      return if not news.dic[_news.id]?.index
-      _news.index =news.dic[_news.id].index
-      news.data[_news.index] = _news
-      news.dic[_news.id] = _news
+      $http.post("/news/#{_news.id}", _news)
+      .then (res)->
+#        return if not news.dic[_news.id]?.index
+#        _news.index =news.dic[_news.id].index
+#        news.data[_news.index] = _news
+#        news.dic[_news.id] = _news
+        alert("Updated successfully")
+        news.refresh()
+
+    delete: (_news)->
+      $http.delete("/news/#{_news.id}")
+      .then (res)->
+        alert("Deleted successfully")
+        news.refresh()
   }
   slides = [
     image: "images/news/img1.jpg"
@@ -241,7 +240,6 @@ angular.module('west-dbms', [
   return {
     user : user
     news : news
-    publish_news : publish_news
     slides : slides
     about : about
     notify : notify

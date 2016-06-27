@@ -31,7 +31,11 @@
                                                     <span class="">·</span><span class="hidden"><img src="./index_files/tubiao01.gif"></span>
                                                     <a href="#/news/{{news.id}}" title="{{news.title}}">{{news.title}}</a>
                                                 </td>
-                                                <td style="text-align:right" class="">{{news.created_at | date:"yyyy-MM-dd"}}</td>
+
+                                                <td style="text-align:right" class="">
+                                                    <a ng-click="delete(news);">删除</a>
+                                                    {{news.created_at | date:"yyyy-MM-dd"}}
+                                                </td>
                                             </tr>
                                             </tbody></table>
                                     </div>

@@ -41,7 +41,13 @@
     $scope.about = DBMS.about;
     $scope.notify = DBMS.notify;
     $scope.contact = DBMS.contact;
-    return $scope.policy_list = DBMS.policy_list;
+    $scope.policy_list = DBMS.policy_list;
+    return $scope["delete"] = function(news) {
+      return DBMS.news["delete"](news)["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
   }).controller('login', function($scope, $http, $location) {
     $scope.form = {
       username: "",
@@ -50,6 +56,7 @@
     return $scope.login = function() {
       return $http.post("/users/login", $scope.form).then(function(res) {
         console.log(res.data);
+        DBMS.user = res.data;
         alert("Login successfully.");
         return $location.path('/').replace();
       })["catch"](function(res) {
@@ -59,11 +66,14 @@
       });
     };
   }).controller('publish', function($scope, DBMS) {
-    $scope.form = DBMS.publish_news;
+    $scope.form = {
+      title: "",
+      content: ""
+    };
     return $scope.publish = function() {
-      return DBMS.publish_news.create().then(function() {
-        DBMS.publish_news.title = "";
-        return DBMS.publish_news.content = "";
+      return DBMS.news.create($scope.form).then(function() {
+        $scope.form.title = "";
+        return $scope.form.content = "";
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
@@ -72,13 +82,15 @@
   }).controller('update', function($scope, DBMS, $route) {
     var news_id;
     news_id = $route.current.params.news_id;
-    DBMS.publish_news.title = DBMS.news.dic[news_id].title;
-    DBMS.publish_news.content = DBMS.news.dic[news_id].content;
-    $scope.form = DBMS.publish_news;
+    $scope.form = {
+      id: news_id,
+      title: "",
+      content: ""
+    };
     return $scope.publish = function() {
-      return DBMS.publish_news.update(news_id).then(function() {
-        DBMS.publish_news.title = "";
-        return DBMS.publish_news.content = "";
+      return DBMS.news.update($scope.form).then(function() {
+        $scope.form.title = "";
+        return $scope.form.content = "";
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);

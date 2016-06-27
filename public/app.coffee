@@ -50,6 +50,12 @@ angular.module('west', [
   $scope.contact = DBMS.contact
 
   $scope.policy_list = DBMS.policy_list
+
+  $scope.delete = (news)->
+    DBMS.news.delete(news)
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
 )
 .controller 'login', ($scope, $http, $location)->
   $scope.form = {
@@ -60,6 +66,7 @@ angular.module('west', [
     $http.post("/users/login", $scope.form)
     .then (res)->
       console.log res.data
+      DBMS.user = res.data
       alert("Login successfully.")
       $location.path('/').replace()
     .catch (res)->
@@ -67,28 +74,33 @@ angular.module('west', [
       alert(err.message)
 
 .controller 'publish', ($scope, DBMS)->
-  $scope.form = DBMS.publish_news
+  $scope.form = {
+    title : ""
+    content : ""
+  }
 
   $scope.publish = ()->
-    DBMS.publish_news.create()
+    DBMS.news.create($scope.form)
     .then ->
-      DBMS.publish_news.title = ""
-      DBMS.publish_news.content = ""
+      $scope.form.title = ""
+      $scope.form.content = ""
     .catch (err)->
       alert(err.data.message)
       console.log err
 
 .controller 'update', ($scope, DBMS, $route)->
   news_id = $route.current.params.news_id
-  DBMS.publish_news.title = DBMS.news.dic[news_id].title
-  DBMS.publish_news.content = DBMS.news.dic[news_id].content
-  $scope.form = DBMS.publish_news
+  $scope.form = {
+    id : news_id
+    title : ""
+    content : ""
+  }
 
   $scope.publish = ()->
-    DBMS.publish_news.update(news_id)
+    DBMS.news.update($scope.form)
     .then ->
-      DBMS.publish_news.title = ""
-      DBMS.publish_news.content = ""
+      $scope.form.title = ""
+      $scope.form.content = ""
     .catch (err)->
       alert(err.data.message)
       console.log err

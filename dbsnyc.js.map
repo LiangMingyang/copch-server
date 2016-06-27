@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "dbsnyc.js",
+  "sourceRoot": "",
+  "sources": [
+    "dbsnyc.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;EAAA,EAAA,GAAK,OAAA,CAAQ,YAAR;;EACL,EAAE,CAAC,IAAH,CAAQ;IAAA,KAAA,EAAO,IAAP;GAAR;AADA"
+}

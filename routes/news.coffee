@@ -8,6 +8,8 @@ router
   News = db.models.news
   User = db.models.user
   News.findAll(
+    where:
+      access_level: 'public'
     include : [
       model : User
       as : 'creator'
@@ -26,6 +28,7 @@ router
   News.find(
     where:
       id : req.params.news_id
+      access_level: 'public'
     include : [
       model : User
       as : 'creator'
@@ -83,6 +86,26 @@ router
     throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
     news.title = req.body.title
     news.content = req.body.content
+    news.save()
+  .then (news)->
+    res.json(news.get(plain:true))
+  .catch (err)->
+    res.status(err.status || 400)
+    res.json(err)
+
+.delete '/:news_id', (req, res)->
+  News = db.models.news
+  User = db.models.user
+  db.Promise.resolve()
+  .then ->
+    return if not req?.session?.user?.id
+    User.findById req.session.user.id
+  .then (user)->
+    throw new Errors.InvalidAccess() if not user
+    News.findById(req.params.news_id)
+  .then (news)->
+    throw new Errors.InvalidAccess("Cannot find this piece of news.") if not news
+    news.access_level = "private"
     news.save()
   .then (news)->
     res.json(news.get(plain:true))
