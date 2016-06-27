@@ -76,7 +76,7 @@ angular.module('west', [
       err = res.data
       alert(err.message)
 
-.controller 'publish', ($scope, DBMS)->
+.controller 'publish', ($scope, $location, DBMS)->
   $scope.form = {
     title : ""
     content : ""
@@ -84,14 +84,15 @@ angular.module('west', [
 
   $scope.publish = ()->
     DBMS.news.push($scope.form)
-    .then ->
+    .then (news)->
       $scope.form.title = ""
       $scope.form.content = ""
+      $location.path("/news/#{news.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
 
-.controller 'update', ($scope, DBMS, $route)->
+.controller 'update', ($scope, $location, DBMS, $route)->
   news_id = $route.current.params.news_id
   $scope.form = {
     id : news_id
@@ -101,9 +102,10 @@ angular.module('west', [
 
   $scope.publish = ()->
     DBMS.news.update($scope.form)
-    .then ->
+    .then (news)->
       $scope.form.title = ""
       $scope.form.content = ""
+      $location.path("/news/#{news.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err

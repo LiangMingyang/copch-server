@@ -37,6 +37,7 @@ angular.module('west-dbms', [
 #        news.dic[_news.id] = _news
         alert("Published successfully")
         news.refresh()
+        return res.data
 
     update: (_news)->
       $http.post("/news/#{_news.id}", _news)
@@ -47,6 +48,7 @@ angular.module('west-dbms', [
 #        news.dic[_news.id] = _news
         alert("Updated successfully")
         news.refresh()
+        return res.data
 
     delete: (_news)->
       $http.delete("/news/#{_news.id}")

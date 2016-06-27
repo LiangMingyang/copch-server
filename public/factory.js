@@ -40,13 +40,15 @@
       push: function(_news) {
         return $http.post("/news", _news).then(function(res) {
           alert("Published successfully");
-          return news.refresh();
+          news.refresh();
+          return res.data;
         });
       },
       update: function(_news) {
         return $http.post("/news/" + _news.id, _news).then(function(res) {
           alert("Updated successfully");
-          return news.refresh();
+          news.refresh();
+          return res.data;
         });
       },
       "delete": function(_news) {

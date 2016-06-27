@@ -67,21 +67,22 @@
         return alert(err.message);
       });
     };
-  }).controller('publish', function($scope, DBMS) {
+  }).controller('publish', function($scope, $location, DBMS) {
     $scope.form = {
       title: "",
       content: ""
     };
     return $scope.publish = function() {
-      return DBMS.news.push($scope.form).then(function() {
+      return DBMS.news.push($scope.form).then(function(news) {
         $scope.form.title = "";
-        return $scope.form.content = "";
+        $scope.form.content = "";
+        return $location.path("/news/" + news.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
       });
     };
-  }).controller('update', function($scope, DBMS, $route) {
+  }).controller('update', function($scope, $location, DBMS, $route) {
     var news_id;
     news_id = $route.current.params.news_id;
     $scope.form = {
@@ -90,9 +91,10 @@
       content: DBMS.news.dic[news_id].content
     };
     return $scope.publish = function() {
-      return DBMS.news.update($scope.form).then(function() {
+      return DBMS.news.update($scope.form).then(function(news) {
         $scope.form.title = "";
-        return $scope.form.content = "";
+        $scope.form.content = "";
+        return $location.path("/news/" + news.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
