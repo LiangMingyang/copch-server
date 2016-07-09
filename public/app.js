@@ -45,6 +45,11 @@
     DBMS.user.refresh();
     $scope.user = DBMS.user;
     return $scope["delete"] = function(news) {
+      var c;
+      c = confirm("确定要删除这条新闻吗？");
+      if (!c) {
+        return;
+      }
       return DBMS.news["delete"](news).then(function() {
         return $location.path('/news').replace();
       })["catch"](function(err) {

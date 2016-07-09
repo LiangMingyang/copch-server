@@ -55,6 +55,8 @@ angular.module('west', [
   $scope.user = DBMS.user
 
   $scope.delete = (news)->
+    c = confirm("确定要删除这条新闻吗？")
+    return if not c
     DBMS.news.delete(news)
     .then ->
       $location.path('/news').replace()
