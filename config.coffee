@@ -3,12 +3,12 @@ module.exports = {
     type: 'mysql'
     name: 'copch'
     username: 'root'
-    password: 'soar159357'
+    password: 'alimengmengda'
     setting:
       host: 'localhost'
       dialect: 'mysql'
       port: 3306
-      timezone: '+08:00'
+      timezone: '+08:00'  
       pool:
         max: 500
         min: 0
