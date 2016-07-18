@@ -20,7 +20,7 @@ router.get '/', (req, res)->
 
 router.post '/', (req, res)->
   Richtext = db.models.richtext
-  name = req.query.key
+  name = req.body.name
   User = db.models.user
   db.Promise.resolve()
   .then ->
@@ -33,11 +33,14 @@ router.post '/', (req, res)->
         name : name
     )
   .then (richtext)->
-    return richtext if richtext
-    Richtext.create(
-      name: name
-      content : req.body.content
-    )
+    if richtext
+      richtext.content = req.body.content
+      richtext.save()
+    else
+      Richtext.create(
+        name: name
+        content : req.body.content
+      )
   .then (richtext)->
     richtext = richtext.get(plain:true)
     res.json(richtext)

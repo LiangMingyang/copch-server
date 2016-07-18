@@ -37,7 +37,7 @@
   router.post('/', function(req, res) {
     var Richtext, User, name;
     Richtext = db.models.richtext;
-    name = req.query.key;
+    name = req.body.name;
     User = db.models.user;
     return db.Promise.resolve().then(function() {
       var ref, ref1;
@@ -56,12 +56,14 @@
       });
     }).then(function(richtext) {
       if (richtext) {
-        return richtext;
+        richtext.content = req.body.content;
+        return richtext.save();
+      } else {
+        return Richtext.create({
+          name: name,
+          content: req.body.content
+        });
       }
-      return Richtext.create({
-        name: name,
-        content: req.body.content
-      });
     }).then(function(richtext) {
       richtext = richtext.get({
         plain: true

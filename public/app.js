@@ -36,9 +36,10 @@
     update();
     $scope.slides = DBMS.slides;
     DBMS.news.refresh();
+    DBMS.richtext.refresh();
     $scope.news_list = DBMS.news.data;
     $scope.news_dic = DBMS.news.dic;
-    $scope.about = DBMS.about;
+    $scope.about = DBMS.richtext.about;
     $scope.notify = DBMS.notify;
     $scope.contact = DBMS.contact;
     $scope.policy_list = DBMS.policy_list;
@@ -102,6 +103,19 @@
         $scope.form.title = "";
         $scope.form.content = "";
         return $location.path("/news/" + news.id).replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+  }).controller('edit-richtext', function($scope, $location, DBMS, $route) {
+    $scope.richtext = {};
+    $scope.richtext.name = $route.current.params.key;
+    $scope.richtext.content = DBMS.richtext[$scope.richtext.name].content;
+    return $scope.update = function() {
+      return DBMS.richtext.update($scope.richtext).then(function() {
+        alert("Updated successfully.");
+        return $location.path("/index").replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);

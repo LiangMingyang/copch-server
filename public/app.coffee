@@ -39,11 +39,13 @@ angular.module('west', [
 
   DBMS.news.refresh()
 
+  DBMS.richtext.refresh()
+
   $scope.news_list = DBMS.news.data
 
   $scope.news_dic = DBMS.news.dic
 
-  $scope.about = DBMS.about
+  $scope.about = DBMS.richtext.about
 
   $scope.notify = DBMS.notify
 
@@ -110,6 +112,21 @@ angular.module('west', [
       $scope.form.title = ""
       $scope.form.content = ""
       $location.path("/news/#{news.id}").replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+
+.controller 'edit-richtext', ($scope, $location, DBMS, $route)->
+  $scope.richtext = {}
+  $scope.richtext.name = $route.current.params.key
+#  console.log $scope.richtext.name
+  $scope.richtext.content = DBMS.richtext[$scope.richtext.name].content
+
+  $scope.update = ()->
+    DBMS.richtext.update($scope.richtext)
+    .then ->
+      alert("Updated successfully.")
+      $location.path("/index").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err

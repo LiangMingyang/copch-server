@@ -39,6 +39,10 @@ angular.module('west-router', [
     templateUrl: 'tpls/editor.tpl.html'
     controller : 'update'
   )
+  .when('/edit-richtext/:key',
+    templateUrl: 'tpls/edit-richtext.tpl.html'
+    controller : 'edit-richtext'
+  )
   .otherwise(
     redirectTo: '/index'
   )
