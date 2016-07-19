@@ -80,6 +80,14 @@
         name: "notify",
         content: ""
       },
+      contact: {
+        name: "contact",
+        content: ""
+      },
+      expert: {
+        name: "expert",
+        content: ""
+      },
       _refresh: function(name) {
         return $http.get("/richtext", {
           params: {
@@ -93,7 +101,9 @@
       },
       refresh: function() {
         richtext._refresh("about");
-        return richtext._refresh("notify");
+        richtext._refresh("notify");
+        richtext._refresh("contact");
+        return richtext._refresh("expert");
       },
       update: function(rt) {
         return $http.post("/richtext", rt).then(function(res) {

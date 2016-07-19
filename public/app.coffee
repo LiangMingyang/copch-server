@@ -49,7 +49,9 @@ angular.module('west', [
 
   $scope.notify = DBMS.richtext.notify
 
-  $scope.contact = DBMS.contact
+  $scope.contact = DBMS.richtext.contact
+
+  $scope.expert = DBMS.richtext.expert
 
   $scope.policy_list = DBMS.policy_list
 

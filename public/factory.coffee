@@ -77,6 +77,14 @@ angular.module('west-dbms', [
       name : "notify"
       content : ""
     }
+    contact : {
+      name : "contact"
+      content : ""
+    }
+    expert : {
+      name : "expert"
+      content : ""
+    }
     _refresh: (name)->
       $http.get("/richtext", params:
         key: name)
@@ -87,6 +95,8 @@ angular.module('west-dbms', [
     refresh : ()->
       richtext._refresh("about")
       richtext._refresh("notify")
+      richtext._refresh("contact")
+      richtext._refresh("expert")
 
     update : (rt)->
       $http.post("/richtext", rt)
