@@ -40,7 +40,7 @@
     $scope.news_list = DBMS.news.data;
     $scope.news_dic = DBMS.news.dic;
     $scope.about = DBMS.richtext.about;
-    $scope.notify = DBMS.notify;
+    $scope.notify = DBMS.richtext.notify;
     $scope.contact = DBMS.contact;
     $scope.policy_list = DBMS.policy_list;
     DBMS.user.refresh();
@@ -113,6 +113,7 @@
     $scope.richtext.name = $route.current.params.key;
     $scope.richtext.content = DBMS.richtext[$scope.richtext.name].content;
     return $scope.update = function() {
+      console.log($scope.richtext);
       return DBMS.richtext.update($scope.richtext).then(function() {
         alert("Updated successfully.");
         return $location.path("/index").replace();

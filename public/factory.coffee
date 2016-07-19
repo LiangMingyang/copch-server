@@ -73,13 +73,20 @@ angular.module('west-dbms', [
       name : "about"
       content : ""
     }
-    refresh : ()->
+    notify : {
+      name : "notify"
+      content : ""
+    }
+    _refresh: (name)->
       $http.get("/richtext", params:
-        key: "about")
+        key: name)
       .then (res)->
-        richtext.about.content = res.data.content
+        richtext[name].content = res.data.content
       .catch (err)->
         console.log err
+    refresh : ()->
+      richtext._refresh("about")
+      richtext._refresh("notify")
 
     update : (rt)->
       $http.post("/richtext", rt)

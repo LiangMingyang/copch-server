@@ -76,16 +76,24 @@
         name: "about",
         content: ""
       },
-      refresh: function() {
+      notify: {
+        name: "notify",
+        content: ""
+      },
+      _refresh: function(name) {
         return $http.get("/richtext", {
           params: {
-            key: "about"
+            key: name
           }
         }).then(function(res) {
-          return richtext.about.content = res.data.content;
+          return richtext[name].content = res.data.content;
         })["catch"](function(err) {
           return console.log(err);
         });
+      },
+      refresh: function() {
+        richtext._refresh("about");
+        return richtext._refresh("notify");
       },
       update: function(rt) {
         return $http.post("/richtext", rt).then(function(res) {

@@ -47,7 +47,7 @@ angular.module('west', [
 
   $scope.about = DBMS.richtext.about
 
-  $scope.notify = DBMS.notify
+  $scope.notify = DBMS.richtext.notify
 
   $scope.contact = DBMS.contact
 
@@ -123,6 +123,7 @@ angular.module('west', [
   $scope.richtext.content = DBMS.richtext[$scope.richtext.name].content
 
   $scope.update = ()->
+    console.log $scope.richtext
     DBMS.richtext.update($scope.richtext)
     .then ->
       alert("Updated successfully.")
