@@ -79,13 +79,14 @@ angular.module('west', [
       err = res.data
       alert(err.message)
 
-.controller 'publish', ($scope, $location, DBMS)->
+.controller 'news', ($scope, $location, $route, DBMS)->
   $scope.form = {
     title : ""
     content : ""
   }
 
-  $scope.publish = ()->
+  $scope.submit = ()->
+
     DBMS.news.push($scope.form)
     .then (news)->
       $scope.form.title = ""
@@ -101,6 +102,26 @@ angular.module('west', [
     DBMS.news.delete(news)
     .then ->
       $location.path('/news').replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+  news_id = $route.current.params.news_id
+  if news_id
+    $scope.form = {
+      id : news_id
+      title : DBMS.news.dic[news_id].title
+      content : DBMS.news.dic[news_id].content
+    }
+  $scope.update = ()->
+    DBMS.news.update(
+      id : $route.current.params.news_id
+      title : DBMS.news.dic[news_id].title
+      content : DBMS.news.dic[news_id].content
+    )
+    .then (news)->
+      $scope.form.title = ""
+      $scope.form.content = ""
+      $location.path("/news/#{news.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
@@ -145,23 +166,6 @@ angular.module('west', [
       alert(err.data.message)
       console.log err
 
-.controller 'update', ($scope, $location, DBMS, $route)->
-  news_id = $route.current.params.news_id
-  $scope.form = {
-    id : news_id
-    title : DBMS.news.dic[news_id].title
-    content : DBMS.news.dic[news_id].content
-  }
-
-  $scope.publish = ()->
-    DBMS.news.update($scope.form)
-    .then (news)->
-      $scope.form.title = ""
-      $scope.form.content = ""
-      $location.path("/news/#{news.id}").replace()
-    .catch (err)->
-      alert(err.data.message)
-      console.log err
 
 .controller 'edit-richtext', ($scope, $location, DBMS, $route)->
   $scope.richtext = {}

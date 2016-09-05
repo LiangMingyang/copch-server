@@ -65,12 +65,13 @@
         return alert(err.message);
       });
     };
-  }).controller('publish', function($scope, $location, DBMS) {
+  }).controller('news', function($scope, $location, $route, DBMS) {
+    var news_id;
     $scope.form = {
       title: "",
       content: ""
     };
-    $scope.publish = function() {
+    $scope.submit = function() {
       return DBMS.news.push($scope.form).then(function(news) {
         $scope.form.title = "";
         $scope.form.content = "";
@@ -80,7 +81,7 @@
         return console.log(err);
       });
     };
-    return $scope["delete"] = function(news) {
+    $scope["delete"] = function(news) {
       var c;
       c = confirm("确定要删除这条新闻吗？");
       if (!c) {
@@ -88,6 +89,28 @@
       }
       return DBMS.news["delete"](news).then(function() {
         return $location.path('/news').replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+    news_id = $route.current.params.news_id;
+    if (news_id) {
+      $scope.form = {
+        id: news_id,
+        title: DBMS.news.dic[news_id].title,
+        content: DBMS.news.dic[news_id].content
+      };
+    }
+    return $scope.update = function() {
+      return DBMS.news.update({
+        id: $route.current.params.news_id,
+        title: DBMS.news.dic[news_id].title,
+        content: DBMS.news.dic[news_id].content
+      }).then(function(news) {
+        $scope.form.title = "";
+        $scope.form.content = "";
+        return $location.path("/news/" + news.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
@@ -130,24 +153,6 @@
       }
       return DBMS.policies["delete"](policy).then(function() {
         return $location.path('/policy').replace();
-      })["catch"](function(err) {
-        alert(err.data.message);
-        return console.log(err);
-      });
-    };
-  }).controller('update', function($scope, $location, DBMS, $route) {
-    var news_id;
-    news_id = $route.current.params.news_id;
-    $scope.form = {
-      id: news_id,
-      title: DBMS.news.dic[news_id].title,
-      content: DBMS.news.dic[news_id].content
-    };
-    return $scope.publish = function() {
-      return DBMS.news.update($scope.form).then(function(news) {
-        $scope.form.title = "";
-        $scope.form.content = "";
-        return $location.path("/news/" + news.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);

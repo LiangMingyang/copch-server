@@ -7,7 +7,7 @@
       templateUrl: 'tpls/about.tpl.html'
     }).when('/news', {
       templateUrl: 'tpls/news.tpl.html',
-      controller: 'publish'
+      controller: 'news'
     }).when('/news/:news_id', {
       templateUrl: 'tpls/news-detail.tpl.html'
     }).when('/expert', {
@@ -23,14 +23,14 @@
       templateUrl: 'tpls/login.tpl.html',
       controller: 'login'
     }).when('/publish', {
-      templateUrl: 'tpls/editor.tpl.html',
-      controller: 'publish'
+      templateUrl: 'tpls/publisher.tpl.html',
+      controller: 'news'
     }).when('/adopt', {
       templateUrl: 'tpls/adopt.tpl.html',
       controller: 'adopt'
     }).when('/update/:news_id', {
       templateUrl: 'tpls/editor.tpl.html',
-      controller: 'update'
+      controller: 'news'
     }).when('/edit/:policy_id', {
       templateUrl: 'tpls/adopt.tpl.html',
       controller: 'edit'

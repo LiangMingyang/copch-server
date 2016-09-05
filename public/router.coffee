@@ -11,7 +11,7 @@ angular.module('west-router', [
   )
   .when('/news',
     templateUrl: 'tpls/news.tpl.html'
-    controller: 'publish'
+    controller: 'news'
   )
   .when('/news/:news_id',
     templateUrl: 'tpls/news-detail.tpl.html'
@@ -34,8 +34,8 @@ angular.module('west-router', [
     controller: 'login'
   )
   .when('/publish',
-    templateUrl: 'tpls/editor.tpl.html'
-    controller : 'publish'
+    templateUrl: 'tpls/publisher.tpl.html'
+    controller : 'news'
   )
   .when('/adopt',
     templateUrl: 'tpls/adopt.tpl.html'
@@ -43,7 +43,7 @@ angular.module('west-router', [
   )
   .when('/update/:news_id',
     templateUrl: 'tpls/editor.tpl.html'
-    controller : 'update'
+    controller : 'news'
   )
   .when('/edit/:policy_id',
     templateUrl: 'tpls/adopt.tpl.html'
