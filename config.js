@@ -5,7 +5,7 @@
       type: 'mysql',
       name: 'copch',
       username: 'root',
-      password: 'alimengmengda',
+      password: '********',
       setting: {
         host: 'localhost',
         dialect: 'mysql',
