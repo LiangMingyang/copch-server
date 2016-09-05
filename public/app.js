@@ -71,7 +71,7 @@
       title: "",
       content: ""
     };
-    $scope.submit = function() {
+    $scope.create = function() {
       return DBMS.news.push($scope.form).then(function(news) {
         $scope.form.title = "";
         $scope.form.content = "";
@@ -103,11 +103,7 @@
       };
     }
     return $scope.update = function() {
-      return DBMS.news.update({
-        id: $route.current.params.news_id,
-        title: DBMS.news.dic[news_id].title,
-        content: DBMS.news.dic[news_id].content
-      }).then(function(news) {
+      return DBMS.news.update($scope.form).then(function(news) {
         $scope.form.title = "";
         $scope.form.content = "";
         return $location.path("/news/" + news.id).replace();
@@ -122,11 +118,11 @@
       title: "",
       content: ""
     };
-    $scope.submit = function() {
+    $scope.create = function() {
       return DBMS.policies.push($scope.form).then(function(policy) {
         $scope.form.title = "";
         $scope.form.content = "";
-        return $location.path("/polices/" + policy.id).replace();
+        return $location.path("/policy/" + policy.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
@@ -144,7 +140,8 @@
       return DBMS.policies.update($scope.form).then(function(policy) {
         $scope.form.title = "";
         $scope.form.content = "";
-        return $location.path("/polices/" + policy.id).replace();
+        console.log(policy.id);
+        return $location.path("/policy/" + policy.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);

@@ -85,7 +85,7 @@ angular.module('west', [
     content : ""
   }
 
-  $scope.submit = ()->
+  $scope.create = ()->
 
     DBMS.news.push($scope.form)
     .then (news)->
@@ -105,6 +105,7 @@ angular.module('west', [
     .catch (err)->
       alert(err.data.message)
       console.log err
+
   news_id = $route.current.params.news_id
   if news_id
     $scope.form = {
@@ -112,12 +113,9 @@ angular.module('west', [
       title : DBMS.news.dic[news_id].title
       content : DBMS.news.dic[news_id].content
     }
+
   $scope.update = ()->
-    DBMS.news.update(
-      id : $route.current.params.news_id
-      title : DBMS.news.dic[news_id].title
-      content : DBMS.news.dic[news_id].content
-    )
+    DBMS.news.update($scope.form)
     .then (news)->
       $scope.form.title = ""
       $scope.form.content = ""
@@ -132,16 +130,16 @@ angular.module('west', [
     content : ""
   }
 
-  $scope.submit = ()->
+  $scope.create = ()->
     DBMS.policies.push($scope.form)
     .then (policy)->
       $scope.form.title = ""
       $scope.form.content = ""
-      $location.path("/polices/#{policy.id}").replace()
+      $location.path("/policy/#{policy.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
-      
+
   policy_id = $route.current.params.policy_id
   if policy_id
     $scope.form = {
@@ -155,7 +153,8 @@ angular.module('west', [
     .then (policy)->
       $scope.form.title = ""
       $scope.form.content = ""
-      $location.path("/polices/#{policy.id}").replace()
+      console.log policy.id
+      $location.path("/policy/#{policy.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
