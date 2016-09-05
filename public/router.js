@@ -21,7 +21,7 @@
       templateUrl: 'tpls/contact.tpl.html'
     }).when('/login', {
       templateUrl: 'tpls/login.tpl.html',
-      controller: 'login'
+      controller: 'user'
     }).when('/publish', {
       templateUrl: 'tpls/publisher.tpl.html',
       controller: 'news'

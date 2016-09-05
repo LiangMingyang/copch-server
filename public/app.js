@@ -48,16 +48,28 @@
     $scope.policy_dic = DBMS.policies.dic;
     DBMS.user.refresh();
     return $scope.user = DBMS.user;
-  }).controller('login', function($scope, $http, $location, DBMS) {
+  }).controller('user', function($scope, $http, $location, DBMS) {
     $scope.form = {
       username: "",
       password: ""
     };
-    return $scope.login = function() {
+    $scope.login = function() {
       return $http.post("/users/login", $scope.form).then(function(res) {
         console.log(res.data);
         DBMS.user.refresh();
         alert("Login successfully.");
+        return $location.path('/').replace();
+      })["catch"](function(res) {
+        var err;
+        err = res.data;
+        return alert(err.message);
+      });
+    };
+    return $scope.logout = function() {
+      return $http.get("/users/logout").then(function(res) {
+        console.log(res.data);
+        DBMS.user.refresh();
+        alert("Logout successfully.");
         return $location.path('/').replace();
       })["catch"](function(res) {
         var err;

@@ -63,7 +63,7 @@ angular.module('west', [
   $scope.user = DBMS.user
 
 )
-.controller 'login', ($scope, $http, $location, DBMS)->
+.controller 'user', ($scope, $http, $location, DBMS)->
   $scope.form = {
     username: ""
     password: ""
@@ -79,6 +79,17 @@ angular.module('west', [
       err = res.data
       alert(err.message)
 
+  $scope.logout = ()->
+    $http.get("/users/logout")
+    .then (res)->
+      console.log res.data
+      DBMS.user.refresh()
+      alert("Logout successfully.")
+      $location.path('/').replace()
+    .catch (res)->
+      err = res.data
+      alert(err.message)
+      
 .controller 'news', ($scope, $location, $route, DBMS)->
   $scope.form = {
     title : ""

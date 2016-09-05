@@ -31,7 +31,7 @@ angular.module('west-router', [
   )
   .when('/login',
     templateUrl: 'tpls/login.tpl.html'
-    controller: 'login'
+    controller: 'user'
   )
   .when('/publish',
     templateUrl: 'tpls/publisher.tpl.html'
