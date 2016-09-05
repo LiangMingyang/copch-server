@@ -126,13 +126,13 @@ angular.module('west', [
       alert(err.data.message)
       console.log err
 
-.controller 'adopt', ($scope, $location, DBMS)->
+.controller 'policy', ($scope, $location, $route, DBMS)->
   $scope.form = {
     title : ""
     content : ""
   }
 
-  $scope.adopt = ()->
+  $scope.submit = ()->
     DBMS.policies.push($scope.form)
     .then (policy)->
       $scope.form.title = ""
@@ -141,13 +141,17 @@ angular.module('west', [
     .catch (err)->
       alert(err.data.message)
       console.log err
-
-  $scope.update = ()->
-    DBMS.policies.update(
-      id: $route.current.params.policy_id
+      
+  policy_id = $route.current.params.policy_id
+  if policy_id
+    $scope.form = {
+      id : policy_id
       title : DBMS.policies.dic[policy_id].title
       content : DBMS.policies.dic[policy_id].content
-    )
+    }
+
+  $scope.update = ()->
+    DBMS.policies.update($scope.form)
     .then (policy)->
       $scope.form.title = ""
       $scope.form.content = ""

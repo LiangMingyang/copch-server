@@ -14,7 +14,7 @@
       templateUrl: 'tpls/expert.tpl.html'
     }).when('/policy', {
       templateUrl: 'tpls/policy.tpl.html',
-      controller: 'adopt'
+      controller: 'policy'
     }).when('/policy/:policy_id', {
       templateUrl: 'tpls/policy-detail.tpl.html'
     }).when('/contact', {
@@ -26,14 +26,14 @@
       templateUrl: 'tpls/publisher.tpl.html',
       controller: 'news'
     }).when('/adopt', {
-      templateUrl: 'tpls/adopt.tpl.html',
-      controller: 'adopt'
+      templateUrl: 'tpls/publisher.tpl.html',
+      controller: 'policy'
     }).when('/update/:news_id', {
       templateUrl: 'tpls/editor.tpl.html',
       controller: 'news'
     }).when('/edit/:policy_id', {
-      templateUrl: 'tpls/adopt.tpl.html',
-      controller: 'edit'
+      templateUrl: 'tpls/editor.tpl.html',
+      controller: 'policy'
     }).when('/edit-richtext/:key', {
       templateUrl: 'tpls/edit-richtext.tpl.html',
       controller: 'edit-richtext'

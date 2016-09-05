@@ -29,7 +29,7 @@
                                         <a href="#/policy/{{policy.id}}" title="{{policy.title}}">{{policy.title}}</a>
                                     </td>
                                     <td style="text-align:right" class="">
-                                        <a ng-if="user.id" ng-href="#/update/{{policy.id}}">编辑</a>
+                                        <a ng-if="user.id" ng-href="#/edit/{{policy.id}}">编辑</a>
                                         <a ng-if="user.id" ng-click="delete(policy);">删除</a>
                                         {{policy.created_at | date:"yyyy-MM-dd"}}
                                     </td>

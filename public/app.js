@@ -116,12 +116,13 @@
         return console.log(err);
       });
     };
-  }).controller('adopt', function($scope, $location, DBMS) {
+  }).controller('policy', function($scope, $location, $route, DBMS) {
+    var policy_id;
     $scope.form = {
       title: "",
       content: ""
     };
-    $scope.adopt = function() {
+    $scope.submit = function() {
       return DBMS.policies.push($scope.form).then(function(policy) {
         $scope.form.title = "";
         $scope.form.content = "";
@@ -131,12 +132,16 @@
         return console.log(err);
       });
     };
-    $scope.update = function() {
-      return DBMS.policies.update({
-        id: $route.current.params.policy_id,
+    policy_id = $route.current.params.policy_id;
+    if (policy_id) {
+      $scope.form = {
+        id: policy_id,
         title: DBMS.policies.dic[policy_id].title,
         content: DBMS.policies.dic[policy_id].content
-      }).then(function(policy) {
+      };
+    }
+    $scope.update = function() {
+      return DBMS.policies.update($scope.form).then(function(policy) {
         $scope.form.title = "";
         $scope.form.content = "";
         return $location.path("/polices/" + policy.id).replace();
