@@ -57,18 +57,11 @@ angular.module('west', [
 
   $scope.policy_list = DBMS.policies.data
 
+  $scope.policy_dic = DBMS.policies.dic
+
   DBMS.user.refresh()
   $scope.user = DBMS.user
 
-  $scope.delete = (news)->
-    c = confirm("确定要删除这条新闻吗？")
-    return if not c
-    DBMS.news.delete(news)
-    .then ->
-      $location.path('/news').replace()
-    .catch (err)->
-      alert(err.data.message)
-      console.log err
 )
 .controller 'login', ($scope, $http, $location, DBMS)->
   $scope.form = {
@@ -102,6 +95,16 @@ angular.module('west', [
       alert(err.data.message)
       console.log err
 
+  $scope.delete = (news)->
+    c = confirm("确定要删除这条新闻吗？")
+    return if not c
+    DBMS.news.delete(news)
+    .then ->
+      $location.path('/news').replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+
 .controller 'adopt', ($scope, $location, DBMS)->
   $scope.form = {
     title : ""
@@ -110,10 +113,24 @@ angular.module('west', [
 
   $scope.adopt = ()->
     DBMS.policies.push($scope.form)
-    .then (news)->
+    .then (policy)->
       $scope.form.title = ""
       $scope.form.content = ""
-      $location.path("/polices/#{news.id}").replace()
+      $location.path("/polices/#{policy.id}").replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+
+  $scope.update = ()->
+    DBMS.policies.update(
+      id: $route.current.params.policy_id
+      title : DBMS.policies.dic[policy_id].title
+      content : DBMS.policies.dic[policy_id].content
+    )
+    .then (policy)->
+      $scope.form.title = ""
+      $scope.form.content = ""
+      $location.path("/polices/#{policy.id}").replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
@@ -121,9 +138,9 @@ angular.module('west', [
   $scope.delete = (policy)->
     c = confirm("确定要删除这条政策吗？")
     return if not c
-    DBMS.news.delete(policy)
+    DBMS.policies.delete(policy)
     .then ->
-      $location.path('/policies').replace()
+      $location.path('/policy').replace()
     .catch (err)->
       alert(err.data.message)
       console.log err

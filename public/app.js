@@ -45,21 +45,9 @@
     $scope.contact = DBMS.richtext.contact;
     $scope.expert = DBMS.richtext.expert;
     $scope.policy_list = DBMS.policies.data;
+    $scope.policy_dic = DBMS.policies.dic;
     DBMS.user.refresh();
-    $scope.user = DBMS.user;
-    return $scope["delete"] = function(news) {
-      var c;
-      c = confirm("确定要删除这条新闻吗？");
-      if (!c) {
-        return;
-      }
-      return DBMS.news["delete"](news).then(function() {
-        return $location.path('/news').replace();
-      })["catch"](function(err) {
-        alert(err.data.message);
-        return console.log(err);
-      });
-    };
+    return $scope.user = DBMS.user;
   }).controller('login', function($scope, $http, $location, DBMS) {
     $scope.form = {
       username: "",
@@ -82,11 +70,24 @@
       title: "",
       content: ""
     };
-    return $scope.publish = function() {
+    $scope.publish = function() {
       return DBMS.news.push($scope.form).then(function(news) {
         $scope.form.title = "";
         $scope.form.content = "";
         return $location.path("/news/" + news.id).replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+    return $scope["delete"] = function(news) {
+      var c;
+      c = confirm("确定要删除这条新闻吗？");
+      if (!c) {
+        return;
+      }
+      return DBMS.news["delete"](news).then(function() {
+        return $location.path('/news').replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
@@ -98,10 +99,24 @@
       content: ""
     };
     $scope.adopt = function() {
-      return DBMS.policies.push($scope.form).then(function(news) {
+      return DBMS.policies.push($scope.form).then(function(policy) {
         $scope.form.title = "";
         $scope.form.content = "";
-        return $location.path("/polices/" + news.id).replace();
+        return $location.path("/polices/" + policy.id).replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+    $scope.update = function() {
+      return DBMS.policies.update({
+        id: $route.current.params.policy_id,
+        title: DBMS.policies.dic[policy_id].title,
+        content: DBMS.policies.dic[policy_id].content
+      }).then(function(policy) {
+        $scope.form.title = "";
+        $scope.form.content = "";
+        return $location.path("/polices/" + policy.id).replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
@@ -113,8 +128,8 @@
       if (!c) {
         return;
       }
-      return DBMS.news["delete"](policy).then(function() {
-        return $location.path('/policies').replace();
+      return DBMS.policies["delete"](policy).then(function() {
+        return $location.path('/policy').replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);
