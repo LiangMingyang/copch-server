@@ -23,6 +23,9 @@
     }).when('/publish', {
       templateUrl: 'tpls/editor.tpl.html',
       controller: 'publish'
+    }).when('/adopt', {
+      templateUrl: 'tpls/adopt.tpl.html',
+      controller: 'adopt'
     }).when('/update/:news_id', {
       templateUrl: 'tpls/editor.tpl.html',
       controller: 'update'

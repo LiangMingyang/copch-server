@@ -7,8 +7,10 @@ sequelize = new Sequelize(config.database.name, config.database.username, config
 News = sequelize.import path.join(__dirname, 'news')
 User = sequelize.import path.join(__dirname, 'user')
 Richtext = sequelize.import path.join(__dirname, 'richtext')
+Policy = sequelize.import path.join(__dirname, 'policy')
 
 News.belongsTo(User, as: 'creator')
 Richtext.belongsTo(User, as: 'creator')
+Policy.belongsTo(User, as: 'creator')
 
 module.exports = sequelize

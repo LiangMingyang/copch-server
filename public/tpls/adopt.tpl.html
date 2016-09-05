@@ -1,0 +1,16 @@
+<table width="100%" style="border:#FCC8BC 1px solid;margin:5px;">
+    <tr>
+        <td>
+            <div class="zuocebiao"><span><a href="#/login">编辑</a></span></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td height="180" valign="top">
+            <!--<label for="title">标题</label>-->
+            <input class="form-control" id="title" name="title" type="text"  placeholder="标题" ng-model="form.title"/>
+            <textarea id="content" ck-editor ng-model="form.content"></textarea>
+            <button class="btn" ng-click="adopt();">发布政策</button>
+        </td>
+    </tr>
+</table>

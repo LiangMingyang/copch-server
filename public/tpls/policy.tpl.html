@@ -1,8 +1,17 @@
 
 <table width="100%" style="border:#FCC8BC 1px solid;margin:5px;">
     <tr>
-        <td>
-            <div class="zuocebiao"><span><a href="#/policy">政策文件</a></span></div>
+        <td height="26" style="background:url(index_files/thead.jpg) no-repeat left;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                    <td width="14%" style="font-size:14px;font-weight:bold;color:#FFFFFF;" align="center">政策文件</td>
+                    <td width="78%"></td>
+                    <td width="8%">
+                        <a ng-if="user.id" ng-href="#/adopt">发布政策</a>
+                    </td>
+                </tr>
+                </tbody></table>
+
         </td>
     </tr>
 
@@ -19,7 +28,11 @@
                                         <span class="">·</span><span class="hidden"><img src="./index_files/tubiao01.gif"></span>
                                         <a href="#/policy/{{$index}}" title="{{policy.title}}">{{policy.title}}</a>
                                     </td>
-                                    <td style="text-align:right" class="">{{policy.created_at | date:"yyyy-MM-dd"}}</td>
+                                    <td style="text-align:right" class="">
+                                        <a ng-if="user.id" ng-href="#/update/{{policy.id}}">编辑</a>
+                                        <a ng-if="user.id" ng-click="delete(policy);">删除</a>
+                                        {{policy.created_at | date:"yyyy-MM-dd"}}
+                                    </td>
                                 </tr>
                                 </tbody></table>
                         </div>

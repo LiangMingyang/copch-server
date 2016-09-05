@@ -37,13 +37,14 @@
     $scope.slides = DBMS.slides;
     DBMS.news.refresh();
     DBMS.richtext.refresh();
+    DBMS.policies.refresh();
     $scope.news_list = DBMS.news.data;
     $scope.news_dic = DBMS.news.dic;
     $scope.about = DBMS.richtext.about;
     $scope.notify = DBMS.richtext.notify;
     $scope.contact = DBMS.richtext.contact;
     $scope.expert = DBMS.richtext.expert;
-    $scope.policy_list = DBMS.policy_list;
+    $scope.policy_list = DBMS.policies.data;
     DBMS.user.refresh();
     $scope.user = DBMS.user;
     return $scope["delete"] = function(news) {
@@ -86,6 +87,34 @@
         $scope.form.title = "";
         $scope.form.content = "";
         return $location.path("/news/" + news.id).replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+  }).controller('adopt', function($scope, $location, DBMS) {
+    $scope.form = {
+      title: "",
+      content: ""
+    };
+    $scope.adopt = function() {
+      return DBMS.policies.push($scope.form).then(function(news) {
+        $scope.form.title = "";
+        $scope.form.content = "";
+        return $location.path("/polices/" + news.id).replace();
+      })["catch"](function(err) {
+        alert(err.data.message);
+        return console.log(err);
+      });
+    };
+    return $scope["delete"] = function(policy) {
+      var c;
+      c = confirm("确定要删除这条政策吗？");
+      if (!c) {
+        return;
+      }
+      return DBMS.news["delete"](policy).then(function() {
+        return $location.path('/policies').replace();
       })["catch"](function(err) {
         alert(err.data.message);
         return console.log(err);

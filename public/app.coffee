@@ -41,6 +41,8 @@ angular.module('west', [
 
   DBMS.richtext.refresh()
 
+  DBMS.policies.refresh()
+
   $scope.news_list = DBMS.news.data
 
   $scope.news_dic = DBMS.news.dic
@@ -53,7 +55,7 @@ angular.module('west', [
 
   $scope.expert = DBMS.richtext.expert
 
-  $scope.policy_list = DBMS.policy_list
+  $scope.policy_list = DBMS.policies.data
 
   DBMS.user.refresh()
   $scope.user = DBMS.user
@@ -96,6 +98,32 @@ angular.module('west', [
       $scope.form.title = ""
       $scope.form.content = ""
       $location.path("/news/#{news.id}").replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+
+.controller 'adopt', ($scope, $location, DBMS)->
+  $scope.form = {
+    title : ""
+    content : ""
+  }
+
+  $scope.adopt = ()->
+    DBMS.policies.push($scope.form)
+    .then (news)->
+      $scope.form.title = ""
+      $scope.form.content = ""
+      $location.path("/polices/#{news.id}").replace()
+    .catch (err)->
+      alert(err.data.message)
+      console.log err
+
+  $scope.delete = (policy)->
+    c = confirm("确定要删除这条政策吗？")
+    return if not c
+    DBMS.news.delete(policy)
+    .then ->
+      $location.path('/policies').replace()
     .catch (err)->
       alert(err.data.message)
       console.log err
